@@ -1,0 +1,21 @@
+{
+  "provider": "openai",
+  "model": "gpt-4.1-mini",
+  "ollama_endpoint": "http://localhost:11434",
+  "hotkeys": {
+    "grammar_fix": "<ctrl>+<alt>+f",
+    "professional_rewrite": "<ctrl>+<alt>+r",
+    "summarize": "<ctrl>+<alt>+s",
+    "translate_en": "<ctrl>+<alt>+t"
+  },
+  "prompts": {
+    "grammar_fix": "Fix grammar and spelling only. Preserve meaning and tone.",
+    "professional_rewrite": "Rewrite professionally while preserving intent.",
+    "summarize": "Summarize concisely.",
+    "translate_en": "Translate to English."
+  },
+  "copy_wait_ms": 120,
+  "paste_wait_ms": 120,
+  "request_timeout_s": 20,
+  "notifications_enabled": true
+}

@@ -2,3 +2,7 @@ target/
 **/*.rs.bk
 /config.toml
 /credentials.toml
+__pycache__/
+*.pyc
+.venv/
+config.json
