@@ -5,8 +5,8 @@ mod input;
 mod replace;
 
 use clap::Parser;
-use commands::{CommandManager, Command};
-use providers::DummyProvider;
+use commands::CommandManager;
+use providers::OpenAIProvider;
 use tracing_subscriber;
 
 #[derive(Parser)]
@@ -23,9 +23,9 @@ fn main() -> anyhow::Result<()> {
     let manager = CommandManager::default();
     if let Some((cmd, stripped)) = manager.find_command(&cli.text) {
         println!("Detected command: {}", cmd.trigger);
-        // For MVP use a local dummy provider
-        let provider = DummyProvider::default();
-        let out = provider.transform(cmd, &stripped)?;
+        // Instantiate provider from environment (OPENAI_API_KEY, OPENAI_API_ENDPOINT, OPENAI_API_MODEL)
+        let provider = OpenAIProvider::from_env();
+        let out = provider.transform(&cmd, &stripped)?;
         println!("Result:\n{}", out);
     } else {
         println!("No command detected in input.");
