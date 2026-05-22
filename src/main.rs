@@ -16,7 +16,7 @@ use input::{start_hotkey_listener, start_clipboard_watcher};
 struct Cli {
     /// Text to process (include trigger at end)
     #[arg(short, long)]
-    text: String,
+    text: Option<String>,
     /// Run in hotkey listener mode (capture clipboard on hotkey)
     #[arg(long)]
     hotkey: bool,
@@ -56,12 +56,16 @@ fn main() -> anyhow::Result<()> {
             }
         }
     } else {
-        if let Some((cmd, stripped)) = manager.find_command(&cli.text) {
-            println!("Detected command: {}", cmd.trigger);
-            let out = provider.transform(&cmd, &stripped)?;
-            println!("Result:\n{}", out);
+        if let Some(text) = &cli.text {
+            if let Some((cmd, stripped)) = manager.find_command(text) {
+                println!("Detected command: {}", cmd.trigger);
+                let out = provider.transform(&cmd, &stripped)?;
+                println!("Result:\n{}", out);
+            } else {
+                println!("No command detected in input.");
+            }
         } else {
-            println!("No command detected in input.");
+            println!("No text provided. Use `--text` or `--hotkey`.");
         }
     }
 
